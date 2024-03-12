@@ -9,11 +9,11 @@ export default function LandingPage() {
         <PersonStanding size={34} className="text-pink-500" /> SupportMe
       </h1>
 
-      <p>The best dashboard to manage your customers support</p>
+      <p className="text-center">The best dashboard to manage your customers support</p>
       
       <div className="flex items-center gap-x-2">
         <Button asChild>
-          <Link href="/login" >Log in</Link>
+          <Link href="/signin" >Log in</Link>
         </Button>
         <small>or</small>
         <Button asChild variant="outline">

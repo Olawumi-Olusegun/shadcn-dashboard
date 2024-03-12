@@ -17,7 +17,7 @@ const formSchema = z.object({
   password: z.string(),
 });
  
-export default function SignupPage() {
+export default function LoginPage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,8 +36,8 @@ export default function SignupPage() {
     <PersonStanding size={50} />
      <Card className='w-full max-w-sm mx-auto'>
       <CardHeader>
-        <CardTitle>Sign up</CardTitle>
-        <CardDescription>Signup for a new support me account</CardDescription>
+        <CardTitle>Sign in</CardTitle>
+        <CardDescription>Signin to your support me account</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -62,15 +62,15 @@ export default function SignupPage() {
               </FormItem>
             )} />
 
-            <Button type='submit'>Sign up</Button>
+            <Button type='submit'>Sign in</Button>
 
           </form>
         </Form>
       </CardContent>
       <CardFooter className='justify-between'>
-        <small>{"Already have an account ?"}</small>
+        <small>{"Don't have an account ?"}</small>
         <Button asChild variant="outline" size="sm">
-          <Link href="/signin" >Sign in</Link>
+          <Link href="/signup" >Sign up</Link>
         </Button>
       </CardFooter>
      </Card>
