@@ -10,11 +10,30 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 
 const formSchema = z.object({
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().min(2),
+  accountType: z.enum(["personal", "company"]),
+  companyName: z.string().optional(),
+  numberOfEmployees: z.coerce.number().optional(),
+}).superRefine((data, context) => {
+  if(data.accountType === "company" && !data.companyName) {
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["companyName"],
+      message: "Company name is required"
+    })
+  }
+  if(data.accountType === "company" && (!data.numberOfEmployees || data.numberOfEmployees < 1 )) {
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["numberOfEmployees"],
+      message: "Number of employees is required"
+    })
+  }
 });
  
 export default function SignupPage() {
@@ -24,8 +43,13 @@ export default function SignupPage() {
     defaultValues: {
       email: "",
       password: "",
+      // accountType: ["personal", "company"],
+      // companyName: "",
+      // numberOfEmployees: "",
     }
   });
+
+  const accountType = form.watch("accountType");
 
   const handleFormSubmit = (values: any) => {
     
@@ -61,7 +85,55 @@ export default function SignupPage() {
                   <FormMessage />
               </FormItem>
             )} />
+            <FormField 
+            control={form.control}
+             name='accountType'
+             render={({field}) => (
+              <FormItem>
+                <FormLabel>Account Type:</FormLabel>
+                <Select onValueChange={field.onChange}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select an account type"></SelectValue>
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value='personal'>Personal</SelectItem>
+                    <SelectItem value='company'>Company</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+             )}
+            />
 
+            { accountType === "company" 
+            ? (
+              <>
+              <FormField control={form.control} name='companyName' render={({field}) => (
+              <FormItem>
+                <FormLabel>Company name:</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Company name' type='text' {...field} />
+                  </FormControl>
+                  <FormMessage />
+              </FormItem>
+              )} />
+
+              <FormField control={form.control} name='numberOfEmployees' render={({field}) => (
+              <FormItem>
+                <FormLabel>Number of employees:</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Number of employees' type='number' min={0} {...field} />
+                  </FormControl>
+                  <FormMessage />
+              </FormItem>
+              )} />
+
+              </>
+            ) 
+            : null 
+            }
             <Button type='submit'>Sign up</Button>
 
           </form>

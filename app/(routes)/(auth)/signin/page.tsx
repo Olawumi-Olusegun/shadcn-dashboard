@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string(),
+
 });
  
 export default function LoginPage() {
@@ -24,12 +25,15 @@ export default function LoginPage() {
     defaultValues: {
       email: "",
       password: "",
+
     }
   });
 
   const handleFormSubmit = (values: any) => {
     
   }
+
+
 
   return (
     <>
@@ -62,6 +66,7 @@ export default function LoginPage() {
               </FormItem>
             )} />
 
+            
             <Button type='submit'>Sign in</Button>
 
           </form>
