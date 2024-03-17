@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-
+import { format } from 'date-fns';
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -159,7 +159,10 @@ export default function SignupPage() {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button variant="outline" className='normal-case flex items-center justify-between pr-2'>
-                        <span>Pick a date</span>
+                        { !!field.value 
+                        ? format(field.value, "PPP") 
+                        : <span>Pick a date</span> 
+                        }
                         <CalendarIcon />
                       </Button>
                     </FormControl>
