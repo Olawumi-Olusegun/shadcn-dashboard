@@ -4,6 +4,8 @@ type Props = {}
 
 export default function DashboardPage({}: Props) {
   return (
-    <div>DashboardPage</div>
+    <div>
+      <h2 className='font-semibold w-full p-2 '>DashboardPage</h2>
+    </div>
   )
 }
