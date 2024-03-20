@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
+import { DayPicker, useDayPicker } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -59,6 +59,8 @@ function Calendar({
         IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
         Dropdown: (dropdownProps) => {
+
+          const { fromMonth, fromYear, fromDate, toMonth, toYear, toDate } = useDayPicker();
           
           let selectValues: { label: string, value: string }[] = [];
 
@@ -70,7 +72,7 @@ function Calendar({
               }
             })
           } else if(dropdownProps.name === "years") { 
-
+            const earliestYear = fromYear || fromMonth?.getFullYear() || fromDate?.getFullYear();
           }
           return <Select>
             <SelectTrigger>
