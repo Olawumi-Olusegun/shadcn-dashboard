@@ -73,6 +73,10 @@ function Calendar({
             })
           } else if(dropdownProps.name === "years") { 
             const earliestYear = fromYear || fromMonth?.getFullYear() || fromDate?.getFullYear();
+            const latestYear = toYear || toMonth?.getFullYear() || toDate?.getFullYear() ;
+            if(earliestYear && latestYear) {
+              const yearLength = latestYear - earliestYear;
+            }
           }
           return <Select>
             <SelectTrigger>
