@@ -75,7 +75,13 @@ function Calendar({
             const earliestYear = fromYear || fromMonth?.getFullYear() || fromDate?.getFullYear();
             const latestYear = toYear || toMonth?.getFullYear() || toDate?.getFullYear() ;
             if(earliestYear && latestYear) {
-              const yearLength = latestYear - earliestYear;
+              const yearsLength = latestYear - earliestYear;
+              selectValues = Array.from({ length: yearsLength }, (_, i) => {
+                return { 
+                  value: (earliestYear + 1).toString(),
+                  label: (earliestYear + 1).toString(),
+                 }
+              })
             }
           }
           return <Select>
